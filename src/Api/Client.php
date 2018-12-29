@@ -25,7 +25,7 @@ class Client implements ClientInterface
      */
     public function getData(): array
     {
-        $payload = file_get_contents($this->source);
+        $payload = @file_get_contents($this->source);
         if ($payload === false) {
             throw new BankHolidayException('Could not retrieve data from API');
         }

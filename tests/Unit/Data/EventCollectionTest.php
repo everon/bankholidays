@@ -127,7 +127,21 @@ class EventCollectionTest extends TestCase
         foreach ($expected as $item) {
             $this->assertContains($item, $result);
         }
-        $this->assertCount(count($expected), $result);
 
+        $this->assertCount(count($expected), $result);
+    }
+
+    /**
+     * @test
+     * @covers ::toArray
+     */
+    public function itCanConvertToArray(): void
+    {
+        $expected = [
+            $this->mock(EventInterface::class),
+            $this->mock(EventInterface::class),
+        ];
+
+        $this->assertSame($expected, (new EventCollection($expected))->toArray());
     }
 }

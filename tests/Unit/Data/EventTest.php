@@ -48,7 +48,6 @@ class EventTest extends TestCase
         $this->assertInstanceOf(EventInterface::class, $this->event);
     }
 
-
     /**
      * @test
      * @covers ::validateArea
@@ -123,8 +122,68 @@ class EventTest extends TestCase
     public function providesArea(): array
     {
         return [
-            'Same is true' => ['area' => EventInterface::AREA_ENGLAND_WALES, 'expect' => true],
+            'Same is true'       => ['area' => EventInterface::AREA_ENGLAND_WALES, 'expect' => true],
             'Different is false' => ['area' => EventInterface::AREA_SCOTLAND, 'expect' => false],
+        ];
+    }
+
+    /**
+     * @test
+     * @covers ::isInDateRange
+     * @dataProvider providesChecksForDateRange
+     *
+     * @param \DateTimeInterface $start
+     * @param \DateTimeInterface $end
+     * @param Event              $event
+     * @param bool               $expect
+     */
+    public function itCanCheckIfInDateRange(
+        \DateTimeInterface $start,
+        \DateTimeInterface $end,
+        Event $event,
+        bool $expect
+    ): void {
+        $this->assertSame($expect, $event->isInDateRange($start, $end));
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function providesChecksForDateRange(): array
+    {
+        $base = [
+            'start' => new DateTimeImmutable('2018-01-05'),
+            'end'   => new DateTimeImmutable('2018-01-10'),
+        ];
+
+        return [
+            'InDateRange'    => array_merge(
+                $base,
+                [
+                    'event'  => new Event(
+                        '',
+                        new DateTimeImmutable('2018-01-06'),
+                        'scotland',
+                        '',
+                        false
+                    ),
+                    'expect' => true,
+                ]
+            ),
+            'NotInDateRange' => array_merge(
+                $base,
+                [
+                    'event'  => new Event(
+                        '',
+                        new DateTimeImmutable('2018-02-01'),
+                        'scotland',
+                        '',
+                        false
+                    ),
+                    'expect' => false,
+                ]
+            ),
         ];
     }
 }

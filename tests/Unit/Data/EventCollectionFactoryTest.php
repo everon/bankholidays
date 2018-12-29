@@ -33,7 +33,7 @@ class EventCollectionFactoryTest extends TestCase
      * @test
      * @covers ::__construct
      */
-    public function itCanBeInstantiated():void
+    public function itCanBeInstantiated(): void
     {
         new EventCollectionFactory(new EventFactory());
 
