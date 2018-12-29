@@ -41,4 +41,13 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         return $result;
     }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        \Mockery::close();
+    }
+
+
 }

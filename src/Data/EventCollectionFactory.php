@@ -30,7 +30,7 @@ class EventCollectionFactory
         // Fire the event data through the event factory with the division
 
         // Put the result in to the event collection to provide the API for traversing the events
-        
+
         return new EventCollection($data);
     }
 }

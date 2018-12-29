@@ -39,4 +39,17 @@ class EventCollectionFactoryTest extends TestCase
 
         $this->assertInstanceOf(EventCollectionInterface::class, $result);
     }
+
+    /**
+     * @test
+     * @covers ::make
+     */
+    public function itShouldConstructTheEvents(): void
+    {
+        $result = $this->factory->make($this->getAssetJson('division.json'));
+
+        $this->assertCount(1, $result);
+    }
+
+
 }
