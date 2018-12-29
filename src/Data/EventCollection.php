@@ -16,6 +16,16 @@ class EventCollection implements EventCollectionInterface
     private $events;
 
     /**
+     * EventCollection constructor.
+     *
+     * @param array $events
+     */
+    public function __construct(array $events = [])
+    {
+        $this->events = $events;
+    }
+
+    /**
      * Count elements of an object
      *
      * @link  https://php.net/manual/en/countable.count.php
@@ -43,4 +53,5 @@ class EventCollection implements EventCollectionInterface
     public function toArray(): array
     {
         // TODO: Implement toArray() method.
-}}
+    }
+}

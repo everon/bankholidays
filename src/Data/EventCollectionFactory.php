@@ -18,8 +18,13 @@ class EventCollectionFactory
         $this->factory = $factory;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return EventCollectionInterface
+     */
     public function make(array $data): EventCollectionInterface
     {
-        return new EventCollection();
+        return new EventCollection($data);
     }
 }

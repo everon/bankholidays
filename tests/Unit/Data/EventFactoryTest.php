@@ -64,7 +64,7 @@ class EventFactoryTest extends TestCase
      */
     public function itWillPassValidation(): void
     {
-        $event = $this->factory->make($this->getAssetJson('event.json'), EventInterface::AREA_SCOTLAND);
+        $this->factory->make($this->getAssetJson('event.json'), EventInterface::AREA_SCOTLAND);
 
         $this->addToAssertionCount(1);
     }
