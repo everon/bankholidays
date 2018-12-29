@@ -22,15 +22,24 @@ class EventCollectionFactory
      * @param array $data
      *
      * @return EventCollectionInterface
+     * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
      */
     public function make(array $data): EventCollectionInterface
     {
-        // Extract the events from each division
+        $items = [];
 
-        // Fire the event data through the event factory with the division
+        // Extract the events from each division
+        foreach ($data as $divisionContainer) {
+
+            $divisionName = $divisionContainer['division'];
+            foreach ($divisionContainer['events'] as $event) {
+
+                // Fire the event data through the event factory with the division
+                $items[] = $this->factory->make($event, $divisionName);
+            }
+        }
 
         // Put the result in to the event collection to provide the API for traversing the events
-
-        return new EventCollection($data);
+        return new EventCollection($items);
     }
 }

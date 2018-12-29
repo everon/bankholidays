@@ -131,4 +131,12 @@ final class Event implements EventInterface
     {
         return $this->area === $area;
     }
+
+    public function isInDateRange(DateTimeInterface $start, DateTimeInterface $end): bool
+    {
+        $timestamp = $this->date->getTimestamp();
+
+        //TODO:  Ensure the times are set to start and end of the day, use a custom date range class
+        return ($timestamp > $start->getTimestamp() && $timestamp < $end->getTimestamp());
+    }
 }

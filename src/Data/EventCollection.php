@@ -7,6 +7,7 @@ namespace Everon\BankHolidays\Data;
 use DateTimeInterface;
 use Everon\BankHolidays\Interfaces\EventCollectionInterface;
 use Everon\BankHolidays\Interfaces\EventInterface;
+use TypeError;
 
 class EventCollection implements EventCollectionInterface
 {
@@ -18,11 +19,27 @@ class EventCollection implements EventCollectionInterface
     /**
      * EventCollection constructor.
      *
-     * @param array $events
+     * @param EventInterface[] $events
      */
     public function __construct(array $events = [])
     {
+        $this->validateEventType($events);
+
         $this->events = $events;
+    }
+
+    /**
+     * @param array $events
+     */
+    private function validateEventType(array $events): void
+    {
+        foreach ($events as $event) {
+            if ($event instanceof EventInterface) {
+                continue;
+            }
+
+            throw new TypeError('Event collection only accepts items of type: ' . EventInterface::class);
+        }
     }
 
     /**
@@ -40,18 +57,29 @@ class EventCollection implements EventCollectionInterface
         return count($this->events);
     }
 
-    public function filterArea(string $area)
+    public function filterArea(string $area): EventCollectionInterface
     {
-        // TODO: Implement filterArea() method.
+        $items = array_filter($this->events,
+            function (EventInterface $event) use ($area) {
+                return $event->affectsArea($area);
+            });
+
+        return new EventCollection($items);
     }
 
-    public function filterDateRange(DateTimeInterface $start, DateTimeInterface $end)
+    public function filterDateRange(DateTimeInterface $start, DateTimeInterface $end): EventCollectionInterface
     {
-        // TODO: Implement filterDateRange() method.
+        $items = array_filter($this->events,
+            function (EventInterface $event) use ($start, $end) {
+                return $event->isInDateRange($start, $end);
+            }
+        );
+
+        return new EventCollection($items);
     }
 
     public function toArray(): array
     {
-        // TODO: Implement toArray() method.
+        return $this->events;
     }
 }

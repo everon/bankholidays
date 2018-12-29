@@ -62,4 +62,14 @@ interface EventInterface
      */
     public function affectsArea(string $area): bool;
 
+    /**
+     * Checks if this event occurs in this time range
+     *
+     * @param DateTimeInterface $start
+     * @param DateTimeInterface $end
+     *
+     * @return bool
+     */
+    public function isInDateRange(DateTimeInterface $start, DateTimeInterface $end): bool;
+
 }

@@ -9,5 +9,16 @@
                 "bunting": true
             }
         ]
+    },
+    "scotland": {
+        "division": "scotland",
+        "events": [
+            {
+                "title": "New Year’s Day",
+                "date": "2012-01-02",
+                "notes": "Substitute day",
+                "bunting": true
+            }
+        ]
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Everon\BankHolidays\Tests;
 
+use Mockery\MockInterface;
+
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     private const ASSET_DIR = __DIR__ . '/Assets/';
@@ -44,9 +46,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function tearDown()
     {
-        parent::tearDown();
-
         \Mockery::close();
+
+        parent::tearDown();
+    }
+
+    protected function mock(string $class): MockInterface
+    {
+        return \Mockery::mock($class);
     }
 
 

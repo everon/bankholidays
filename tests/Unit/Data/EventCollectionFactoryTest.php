@@ -31,6 +31,17 @@ class EventCollectionFactoryTest extends TestCase
 
     /**
      * @test
+     * @covers ::__construct
+     */
+    public function itCanBeInstantiated():void
+    {
+        new EventCollectionFactory(new EventFactory());
+
+        $this->addToAssertionCount(1);
+    }
+
+    /**
+     * @test
      * @covers ::make
      */
     public function itCanCreateAnEventCollection(): void
@@ -48,7 +59,7 @@ class EventCollectionFactoryTest extends TestCase
     {
         $result = $this->factory->make($this->getAssetJson('division.json'));
 
-        $this->assertCount(1, $result);
+        $this->assertCount(2, $result);
     }
 
 
