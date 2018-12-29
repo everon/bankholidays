@@ -28,4 +28,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         return $data;
     }
+
+    protected function getAssetJson(string $path): array
+    {
+        $data = $this->getAsset($path);
+
+        $result = json_decode($data, true);
+
+        if ($result === null) {
+            $this->fail('Could not decode json: ' . $path);
+        }
+
+        return $result;
+    }
 }

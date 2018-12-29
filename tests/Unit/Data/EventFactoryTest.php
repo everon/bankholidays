@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Everon\BankHolidays\Tests\Unit\Data;
 
+use DateTimeImmutable;
 use Everon\BankHolidays\Data\EventFactory;
 use Everon\BankHolidays\Interfaces\EventInterface;
 use Everon\BankHolidays\Tests\TestCase;
@@ -31,7 +32,7 @@ class EventFactoryTest extends TestCase
     /**
      * @test
      * @covers ::validateData
-     * @dataProvider providesInvalidData
+     * @dataProvider                   providesInvalidData
      * @expectedException \Everon\BankHolidays\Exceptions\BankHolidayException
      * @expectedExceptionMessageRegExp /Required event key (.+) missing/
      *
@@ -44,15 +45,33 @@ class EventFactoryTest extends TestCase
 
     public function providesInvalidData(): array
     {
-        $data = json_decode($this->getAsset('event.json'), true);
+        $data   = $this->getAssetJson('event.json');
         $result = [];
 
-        foreach(EventFactory::EXPECTED_KEYS as $required)
-        {
+        foreach (EventFactory::EXPECTED_KEYS as $required) {
             $temp = $data;
             unset($temp[$required]);
             $result[] = ['data' => $temp];
         }
+
         return $result;
+    }
+
+
+    /**
+     * @test
+     * @covers ::make
+     * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
+     * @throws \Exception
+     */
+    public function itCanCreateTheEvent(): void
+    {
+        $data  = $this->getAssetJson('event.json');
+        $event = $this->factory->make($data, EventInterface::AREA_ENGLAND_WALES);
+
+        $this->assertSame($data['title'], $event->getTitle());
+        $this->assertSame($data['notes'], $event->getNotes());
+        $this->assertSame($data['bunting'], $event->hasBunting());
+        $this->assertEquals($data['date'], $event->getDate()->format('Y-m-d'));
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Everon\BankHolidays\Data;
 
+use DateTimeImmutable;
 use Everon\BankHolidays\Exceptions\BankHolidayException;
 use Everon\BankHolidays\Interfaces\EventInterface;
 
@@ -22,12 +23,13 @@ class EventFactory
      *
      * @return EventInterface
      * @throws BankHolidayException
+     * @throws \Exception
      */
     public function make(array $data, string $area): EventInterface
     {
         $this->validateData($data);
 
-        return new Event($data['title'], $data['date'], $area, $data['notes'], $data['bunting']);
+        return new Event($data['title'], new DateTimeImmutable($data['date']), $area, $data['notes'], $data['bunting']);
     }
 
     /**
@@ -35,7 +37,7 @@ class EventFactory
      *
      * @throws BankHolidayException
      */
-    private function validateData($data)
+    private function validateData($data): void
     {
         foreach (self::EXPECTED_KEYS as $requiredKey) {
             if (!array_key_exists($requiredKey, $data)) {

@@ -29,7 +29,7 @@ class ClientTest extends TestCase
 
     /**
      * @test
-     * @covers ::getDataFromApi
+     * @covers ::getData
      * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
      */
     public function itCanGetTheDataFromTheApi(): void
