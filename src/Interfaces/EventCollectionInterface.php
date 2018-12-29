@@ -7,7 +7,7 @@ namespace Everon\BankHolidays\Interfaces;
 use Countable;
 use DateTimeInterface;
 
-interface HolidayCollectionInterface extends Countable
+interface EventCollectionInterface extends Countable
 {
     public function filterArea(string $area);
 

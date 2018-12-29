@@ -8,10 +8,14 @@ use DateTimeInterface;
 
 interface EventInterface
 {
+    public const AREA_ENGLAND_WALES    = 'england-and-wales';
+    public const AREA_SCOTLAND         = 'scotland';
+    public const AREA_NORTHERN_IRELAND = 'northern-ireland';
+
     public const AREAS = [
-        'england-and-wales',
-        'scotland',
-        'northern-ireland'
+        self::AREA_ENGLAND_WALES,
+        self::AREA_SCOTLAND,
+        self::AREA_NORTHERN_IRELAND,
     ];
 
     /**
