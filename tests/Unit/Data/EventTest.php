@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Everon\BankHolidays\Tests\Unit\Data;
 
+use DateTimeImmutable;
+use Everon\BankHolidays\Data\Event;
+use Everon\BankHolidays\Interfaces\EventInterface;
 use Everon\BankHolidays\Tests\TestCase;
 
 /**
@@ -15,10 +18,74 @@ use Everon\BankHolidays\Tests\TestCase;
 class EventTest extends TestCase
 {
     /**
-     * @test
+     * @var Event
      */
-    public function itWillValidateTheArea():void
-    {
+    private $event;
 
+    /**
+     * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
+     * @throws \Exception
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->event =
+            new Event('Test',
+                      new DateTimeImmutable('1988-11-26'),
+                      EventInterface::AREA_ENGLAND_WALES,
+                      'Some notes',
+                      true
+            );
+    }
+
+
+    /**
+     * @test
+     * @covers ::validateArea
+     * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
+     * @throws \Exception
+     * @expectedException \Everon\BankHolidays\Exceptions\BankHolidayException
+     * @expectedExceptionMessageRegExp /Invalid area: (.+)/
+     */
+    public function itWillValidateTheArea(): void
+    {
+        new Event('', new DateTimeImmutable(), 'Blah', '', true);
+    }
+
+    /**
+     * @test
+     * @covers ::getTitle
+     */
+    public function itCanGetTheTitle(): void
+    {
+        $this->assertSame('Test', $this->event->getTitle());
+    }
+
+    /**
+     * @test
+     * @covers ::getDate
+     */
+    public function itCanGetTheDate(): void
+    {
+        $this->assertSame('1988-11-26', $this->event->getDate()->format('Y-m-d'));
+    }
+
+    /**
+     * @test
+     * @covers ::hasBunting
+     */
+    public function itCanCheckIfBunting(): void
+    {
+        $this->assertSame(true, $this->event->hasBunting());
+    }
+
+    /**
+     * @test
+     * @covers ::getNotes
+     */
+    public function itCanGetTheNotes(): void
+    {
+        $this->assertSame('Some notes', $this->event->getNotes());
     }
 }

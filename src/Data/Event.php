@@ -6,6 +6,7 @@ namespace Everon\BankHolidays\Data;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Everon\BankHolidays\Exceptions\BankHolidayException;
 use Everon\BankHolidays\Interfaces\EventInterface;
 
 final class Event implements EventInterface
@@ -35,13 +36,38 @@ final class Event implements EventInterface
      */
     private $hasBunting;
 
+    /**
+     * Event constructor.
+     *
+     * @param string            $title
+     * @param DateTimeImmutable $date
+     * @param string            $area
+     * @param string            $notes
+     * @param bool              $hasBunting
+     *
+     * @throws BankHolidayException
+     */
     public function __construct(string $title, DateTimeImmutable $date, string $area, string $notes, bool $hasBunting)
     {
+        $this->validateArea($area);
+
         $this->title      = $title;
         $this->date       = $date;
         $this->area       = $area;
         $this->notes      = $notes;
         $this->hasBunting = $hasBunting;
+    }
+
+    /**
+     * @param string $area
+     *
+     * @throws BankHolidayException
+     */
+    private function validateArea(string $area): void
+    {
+        if (!in_array($area, self::AREAS, true)) {
+            throw new BankHolidayException('Invalid area: ' . $area);
+        }
     }
 
     /**
