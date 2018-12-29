@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Everon\BankHolidays\Tests\Unit\Data;
 
 use Everon\BankHolidays\Data\EventFactory;
-use Everon\BankHolidays\Exceptions\BankHolidayException;
 use Everon\BankHolidays\Interfaces\EventInterface;
 use Everon\BankHolidays\Tests\TestCase;
 
@@ -32,8 +31,9 @@ class EventFactoryTest extends TestCase
     /**
      * @test
      * @covers ::validateData
-     * @expectedException BankHolidayException
-     * @expectedExceptionMessageRegExp Required event key (.+) missing
+     * @dataProvider providesInvalidData
+     * @expectedException \Everon\BankHolidays\Exceptions\BankHolidayException
+     * @expectedExceptionMessageRegExp /Required event key (.+) missing/
      *
      * @param array $data
      */
@@ -51,7 +51,7 @@ class EventFactoryTest extends TestCase
         {
             $temp = $data;
             unset($temp[$required]);
-            $result[] = $temp;
+            $result[] = ['data' => $temp];
         }
         return $result;
     }
