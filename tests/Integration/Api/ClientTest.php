@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Everon\BankHolidays\Tests\Integration;
+namespace Everon\BankHolidays\Tests\Integration\Api;
 
-use Everon\BankHolidays\Client;
+use Everon\BankHolidays\Api\Client;
 use Everon\BankHolidays\Tests\TestCase;
 
 /**
  * Class ClientTest
  *
  * @package Everon\UkBankHolidays\Tests\Integration
- * @coversDefaultClass \Everon\BankHolidays\Client
+ * @coversDefaultClass \Everon\BankHolidays\Api\Client
  */
 class ClientTest extends TestCase
 {

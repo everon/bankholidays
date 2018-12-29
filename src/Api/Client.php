@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Everon\BankHolidays;
+namespace Everon\BankHolidays\Api;
 
 use Everon\BankHolidays\Exceptions\BankHolidayException;
 use Everon\BankHolidays\Interfaces\ClientInterface;
