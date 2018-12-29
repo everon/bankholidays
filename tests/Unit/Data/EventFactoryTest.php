@@ -38,7 +38,7 @@ class EventFactoryTest extends TestCase
      *
      * @param array $data
      */
-    public function itWillValidateAllDataIsPresent(array $data)
+    public function itWillValidateAllDataIsPresent(array $data): void
     {
         $this->factory->make($data, EventInterface::AREA_ENGLAND_WALES);
     }
@@ -55,6 +55,18 @@ class EventFactoryTest extends TestCase
         }
 
         return $result;
+    }
+
+    /**
+     * @test
+     * @covers ::validateData
+     * @throws \Everon\BankHolidays\Exceptions\BankHolidayException
+     */
+    public function itWillPassValidation(): void
+    {
+        $event = $this->factory->make($this->getAssetJson('event.json'), EventInterface::AREA_SCOTLAND);
+
+        $this->addToAssertionCount(1);
     }
 
 

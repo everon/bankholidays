@@ -39,6 +39,15 @@ class EventTest extends TestCase
             );
     }
 
+    /**
+     * @test
+     * @covers ::__construct
+     */
+    public function itCanBeCreated()
+    {
+        $this->assertInstanceOf(EventInterface::class, $this->event);
+    }
+
 
     /**
      * @test
@@ -87,5 +96,35 @@ class EventTest extends TestCase
     public function itCanGetTheNotes(): void
     {
         $this->assertSame('Some notes', $this->event->getNotes());
+    }
+
+    /**
+     * @test
+     * @covers ::getArea
+     */
+    public function itCanGetTheArea(): void
+    {
+        $this->assertSame(EventInterface::AREA_ENGLAND_WALES, $this->event->getArea());
+    }
+
+    /**
+     * @test
+     * @covers ::affectsArea
+     * @dataProvider providesArea
+     *
+     * @param string $area
+     * @param bool   $expect
+     */
+    public function itCanCompareTheArea(string $area, bool $expect): void
+    {
+        $this->assertSame($expect, $this->event->affectsArea($area));
+    }
+
+    public function providesArea(): array
+    {
+        return [
+            'Same is true' => ['area' => EventInterface::AREA_ENGLAND_WALES, 'expect' => true],
+            'Different is false' => ['area' => EventInterface::AREA_SCOTLAND, 'expect' => false],
+        ];
     }
 }
